@@ -12,18 +12,4 @@ class Player(Character):
             self.power += 2
 
 
-    @staticmethod
-    def attack(player: Character, monster: Monster)->bool:
-        # player_dice = player.roll_dice(20) + player.speed
-        player_dice = player.roll_dice(30) + player.speed
-        if player_dice > monster.armor_rating:
-            return True
-        else:
-            return False
-
-    @staticmethod
-    def roll_dice(sides: int):
-        return randint(1, sides)
-
-
 
