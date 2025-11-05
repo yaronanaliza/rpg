@@ -1,52 +1,29 @@
 from random import randint ,choice
-from tkinter.font import names
-from tty import ISPEED
-from game import *
-from core.orc import *
-from core.goblin import *
-
-class Character:
-
-    def __init__(self, name: str,armor_rating: int, hp: int=50, speed: int = randint(5, 10), power: int = randint(5, 10) ):
-        self.name = name
-        self.armor_rating = armor_rating
-        self.hp = hp
-        self.speed = speed
-        self.power =power
-
-    def speak(self):
-        pass
-
-    def attack(self):
-        pass
-
-
-
-
-
-
+from core.orc import Orc,Monster
+from core.goblin import Goblin
+from core.character import *
 
 
 class Player(Character):
-    def __init__(self,name,hp,speed,power,armor_rating,profession:str=choice(["warrior","Healer"])):
-        suppr().__init_(name,hp,speed,power,armor_rating)
+    def __init__(self, name: str,armor_rating: int=randint(5,15), hp: int=50, speed: int = randint(5, 10), power: int = randint(5, 10),profession:str=choice(["warrior","Healer"])):
+        super().__init__(name,armor_rating,hp,speed,power)
         self.profession = profession
         if self.profession == "warrior":
             self.power += 2
-        self.armor_rating = randint(5,15)
 
-    def speak(self,message)->None:
-        print(f"{self.name} say {message}")
 
     @staticmethod
-    def attack(player: Player, monster: Orc|Goblin)->bool:
-        player_dice = player.roll_dice(20) + self.speed
+    def attack(player: Character, monster: Monster)->bool:
+        # player_dice = player.roll_dice(20) + player.speed
+        player_dice = player.roll_dice(30) + player.speed
         if player_dice > monster.armor_rating:
             return True
         else:
             return False
 
-
+    @staticmethod
+    def roll_dice(sides: int):
+        return randint(1, sides)
 
 
 

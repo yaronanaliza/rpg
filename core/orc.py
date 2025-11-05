@@ -1,28 +1,25 @@
-from core.player import  *
-from random import randint
-class Monster(Character):
-    def __init__(self, name, hp, type, speed, power, armor_rating, weapon: str = choice(["knife", "sword", "axe"])):
-        suppr().__init_(name, hp, speed, power, armor_rating)
-        self.weapon = weapon
+
+from random import randint,choice
+from core.character import *
+
+
+class Orc(Monster):
+
+    def __init__(self, name,armor_rating:int= randint(2,8) , hp: int=50,type:str ="orc", speed: int = randint(0, 5), power: int = randint(10, 15)
+                 , weapon:str= choice(["knife", "sword", "axe"])):
+        super().__init__(name,armor_rating, hp,type, speed, power,weapon)
+        
+
+
 
     @staticmethod
-    def attack(player: Player, monster: Orc | Goblin):
-        monster_dice = monster.roll_dice(20) + self.speed
+    def attack(player: Character, monster: Monster):
+        monster_dice = monster.roll_dice(20) + monster.speed
         if monster_dice > player.armor_rating:
             return True
         else:
             return False
 
-
-class Orc(Monster):
-    def __init__(self, name, hp, type, speed, power, armor_rating, weapon):
-        suppr().__init_(name, hp, speed, power, armor_rating,weapon)
-        self.type = "orc"
-        self.speed = randint(0,5)
-        self.power = randint(10, 15)
-        self.armor_rating = randint(2,8)
-
-    def speak(self):
-        print(f"The {self.type} {self.name} is Furious! ")
-
-
+    @staticmethod
+    def roll_dice(sides:int):
+        return randint(1, sides)

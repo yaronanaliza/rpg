@@ -1,11 +1,21 @@
-from core.orc import *
+from core.character import *
+
 class Goblin(Monster):
-    def __init__(self, name, hp, type, speed, power, armor_rating, weapon):
-        suppr().__init_(name, hp, speed, power, armor_rating,weapon)
-        self.hp = 20
-        self.type = "goblin"
-        self.armor_rating = 1
+    def __init__(self, name,armor_rating:int= 1,  hp: int=20,type:str ="goblin", speed: int = randint(0, 5), power: int = randint(10, 15)
+                , weapon:str= choice(["knife", "sword", "axe"])):
 
-    def speak(self):
-        print(f"The {self.type} {self.name} is Furious! ")
+        super().__init__(name,armor_rating, hp,type, speed, power, weapon)
+        
 
+
+    @staticmethod
+    def attack(player: Character, monster:Monster):
+        monster_dice = monster.roll_dice(20) + monster.speed
+        if monster_dice > player.armor_rating:
+            return True
+        else:
+            return False
+
+    @staticmethod
+    def roll_dice(sides: int):
+        return randint(1, sides)
